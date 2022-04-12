@@ -1,14 +1,14 @@
+const ObjectId = require("mongoose").Types.ObjectId;
 const Task = require("../models/Task");
 
 const getToken = require("../helpers/get-token");
 const getUserByToken = require("../helpers/get-user-by-token");
-const ObjectId = require("mongoose").Types.ObjectId;
 
 module.exports = class TaskController {
   static async createTasks(req, res) {
     const { task, taskpriority } = req.body;
 
-    const checked = false;
+    let checked = false;
 
     if (!task) {
       res
@@ -49,7 +49,7 @@ module.exports = class TaskController {
   static async removeTasks(req, res) {
     const id = req.params.id;
 
-    //check if id is valid
+    // // check if id is valid
     if (!ObjectId.isValid(id)) {
       res.status(422).json({ message: "ID inválido!" });
       return;
@@ -124,6 +124,40 @@ module.exports = class TaskController {
     } else {
       updateData.taskpriority = taskpriority;
     }
+
+    await Task.findByIdAndUpdate(id, updateData);
+
+    res.status(200).json({ message: "Tarefa atualizada com sucesso!" });
+  }
+
+  static async checkedTasks(req, res) {
+    const id = req.params.id;
+
+    const { checked } = req.body;
+
+    const updateData = {};
+
+    //check if task exists
+    const tasks = await Task.findOne({ _id: id });
+
+    if (!tasks) {
+      res.status(404).json({ message: "Tarefa não encontrada!" });
+      return;
+    }
+
+    //check if logged in user registered the task
+    const token = getToken(req);
+    const user = await getUserByToken(token);
+
+    if (tasks.user._id.toString() !== user._id.toString()) {
+      res.status(422).json({
+        message:
+          "Houve um problema em processar a sua solicitação, tente novamente mais tarde!",
+      });
+      return;
+    }
+
+    updateData.checked = true;
 
     await Task.findByIdAndUpdate(id, updateData);
 
