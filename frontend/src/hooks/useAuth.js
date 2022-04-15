@@ -8,6 +8,7 @@ export default function useAuth() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+
   useEffect(() => {
     const token = localStorage.getItem("token");
 
@@ -20,6 +21,8 @@ export default function useAuth() {
   }, []);
 
   async function registerUser(user) {
+    let msgText = "Cadastro realizado com sucesso!";
+
     try {
       const data = await api.post("/users/register", user).then((res) => {
         return res.data;
@@ -27,7 +30,7 @@ export default function useAuth() {
 
       await authUser(data);
     } catch (error) {
-      console.log(error);
+      msgText = (error.res.data.message)
     }
   }
 

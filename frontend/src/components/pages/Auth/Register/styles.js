@@ -85,5 +85,5 @@ export const ButtonSubmit = styled.input`
   cursor: pointer;
   font-size: 1.5rem;
   font-weight: bold;
-  margin-top: 1.5rem;
+  margin-top: 3rem;
 `;

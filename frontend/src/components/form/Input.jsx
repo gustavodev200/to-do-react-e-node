@@ -18,7 +18,7 @@ const InputWrapper = styled.input`
   border: none;
   border-left: 5px solid #6c63ff;
   border-radius: 2px;
-  margin-bottom: 2.3rem;
+  margin-top: 1.5rem;
   font-size: 1.5rem;
 
   @media screen and (min-width: 700px) {
