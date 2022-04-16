@@ -1,9 +1,18 @@
+import { useEffect, useState } from "react";
 import { MsgError } from "./styles";
-import { useState } from "react";
 
-const InputError = ({field}) => {
+const InputError = ({ msgError }) => {
+  // const [visibility, setVisibility] = useState(false);
 
-  return <MsgError>Houve um Erro</MsgError>;
+  // useEffect(() => {
+  //   setVisibility(true);
+
+  //   setTimeout(() => {
+  //     setVisibility(false);
+  //   }, 4000);
+  // }, []);
+
+  return <MsgError>{msgError}</MsgError>;
 };
 
 export default InputError;

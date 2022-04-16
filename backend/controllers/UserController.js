@@ -99,7 +99,7 @@ module.exports = class UserController {
     const checkPassword = await bcrypt.compare(password, user.password);
 
     if (!checkPassword) {
-      res.status(422).json({ message: "senha inválida" });
+      res.status(422).json({ message: "Senha inválida" });
       return;
     }
 

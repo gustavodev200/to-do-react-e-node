@@ -7,7 +7,8 @@ export default function useAuth() {
   const [authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
+  const [msgError, setMsgError] = useState("");
+  const [msgSuccess, setMsgSuccess] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -24,13 +25,34 @@ export default function useAuth() {
     let msgText = "Cadastro realizado com sucesso!";
 
     try {
-      const data = await api.post("/users/register", user).then((res) => {
-        return res.data;
-      });
+      const { data, status } = await api.post("/users/register", user);
 
-      await authUser(data);
+      if (status === 200) {
+        await authUser(data);
+      } else {
+        throw new Error(data.message);
+      }
+
+      setMsgSuccess(msgText);
     } catch (error) {
-      msgText = (error.res.data.message)
+      return setMsgError(error.message);
+    }
+  }
+
+  async function login(user) {
+    let msgText = "Login realizado com sucesso!";
+
+    try {
+      const { data, status } = await api.post("/users/login", user);
+
+      if (status === 200) {
+        await authUser(data);
+      } else {
+        throw new Error(data.message);
+      }
+      setMsgSuccess(msgText);
+    } catch (error) {
+      return setMsgError(error.message);
     }
   }
 
@@ -41,5 +63,5 @@ export default function useAuth() {
     navigate("/");
   }
 
-  return { loading, authenticated, registerUser };
+  return { loading, authenticated, registerUser, login, msgError, msgSuccess };
 }

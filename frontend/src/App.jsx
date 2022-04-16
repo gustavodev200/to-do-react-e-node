@@ -12,7 +12,6 @@ function App() {
   return (
     <>
       <GlobalStyle />
-
       <Router>
         <UserProvider>
           {/* <Navbar /> */}

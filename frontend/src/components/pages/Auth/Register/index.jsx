@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -11,7 +11,7 @@ import {
   ButtonSubmit,
   ContentOne,
   ContentTwo,
-  MessageError,
+  MessageValidation,
   RegisterWrapper,
   TextLogo,
 } from "./styles";
@@ -19,7 +19,7 @@ import { Link } from "react-router-dom";
 import InputError from "../../../InputError";
 
 const Register = () => {
-  const { registerUser } = useContext(Context);
+  const { registerUser, msgError } = useContext(Context);
   const schema = yup
     .object({
       name: yup.string().required("O nome é obrigatório"),
@@ -49,8 +49,6 @@ const Register = () => {
     resolver: yupResolver(schema),
   });
 
-  const onError = (error) => {};
-
   const onSubmit = (user, e) => {
     e.preventDefault();
     registerUser(user);
@@ -66,7 +64,7 @@ const Register = () => {
       </ContentOne>
       <ContentTwo>
         <h1>Fazer cadastro</h1>
-        <form onSubmit={handleSubmit(onSubmit, onError)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Input
             type="text"
             name="name"
@@ -74,7 +72,7 @@ const Register = () => {
             register={register}
             required
           />
-          {errors?.name?.type && <InputError field='email'/>}
+          <MessageValidation>{errors.name?.message}</MessageValidation>
           <Input
             type="email"
             name="email"
@@ -82,7 +80,7 @@ const Register = () => {
             register={register}
             required
           />
-          {errors?.email?.type && <InputError field='email'/>}
+          <MessageValidation>{errors.email?.message}</MessageValidation>
           <Input
             type="password"
             name="password"
@@ -90,7 +88,7 @@ const Register = () => {
             register={register}
             required
           />
-          {errors?.password?.type && <InputError field='password'/>}
+          <MessageValidation>{errors.password?.message}</MessageValidation>
           <Input
             type="password"
             name="confirmpassword"
@@ -98,7 +96,10 @@ const Register = () => {
             register={register}
             required
           />
-          {errors?.confirmpassword?.type && <InputError field='confirmpassword'/>}
+          <MessageValidation>
+            {errors.confirmpassword?.message}
+          </MessageValidation>
+          {msgError && <InputError msgError={msgError} />}
           <ButtonSubmit type="submit" value="CADASTRAR" />
           <Link to="/login">Já tenho conta</Link>
         </form>

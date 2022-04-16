@@ -87,3 +87,11 @@ export const ButtonSubmit = styled.input`
   font-weight: bold;
   margin-top: 3rem;
 `;
+
+export const MessageValidation = styled.span`
+  margin-top: 0.5rem;
+  width: 100%;
+  font-size: 1.2rem;
+  text-align: start;
+  color: #ff3737;
+`;
