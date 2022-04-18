@@ -1,14 +1,44 @@
-import React from 'react'
+import React from "react";
+import styled from "styled-components";
 
-const SelectTask = ({ onChange, onBlur, name, label }, ref) => {
+import circle_red from "../../assets/img/circle_red.svg";
+
+const Select = React.forwardRef(({ onChange, onBlur, name, label }, ref) => (
   <>
-    <label>{label}</label>
-    <select name={name} ref={ref} onChange={onChange} onBlur={onBlur}>
-      <option value="1">20</option>
-      <option value="2">30</option>
-      <option value="3">40</option>
-    </select>
-  </>;
-};
+    <LabelWrapper>{label}</LabelWrapper>
+    <SelectWrapper name={name} ref={ref} onChange={onChange} onBlur={onBlur}>
+      <option value="1">TAREFA DIFÍCIL</option>
+      <option value="2">TAREFA MÉDIA</option>
+      <option value="3">TAREFA FÁCIL</option>
+    </SelectWrapper>
+  </>
+));
 
-export default SelectTask;
+const LabelWrapper = styled.label`
+  width: 80%;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: start;
+  color: #fff;
+`;
+
+const SelectWrapper = styled.select`
+  width: 80%;
+  height: 3rem;
+  border-radius: 5px;
+  background-color: #fff;
+  border: none;
+  color: #2f2e41;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+  outline: none;
+  font-size: 1.3rem;
+
+  option {
+    border: none;
+    font-weight: bold;
+    border-radius: 5px;
+  }
+`;
+
+export default Select;

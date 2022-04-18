@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   ButtonTask,
   ContentOne,
   ContentTwo,
-  ErrorTask,
+  CreateTasks,
   HeaderText,
   HomeWrapper,
   InputTask,
@@ -11,33 +11,39 @@ import {
   TaskWrapper,
 } from "./styles";
 
-import SelectTask from '../../form/SelectTask'
+import Select from "../../form/SelectTask";
 
 import { useForm } from "react-hook-form";
 import api from "../../../utils/api";
 
+import "antd/dist/antd.css";
+import { message } from "antd";
+
 const Home = () => {
   const [token] = useState(localStorage.getItem("token") || "");
-  const [errorTask, setErrorTask] = useState("");
 
   const { register, handleSubmit } = useForm();
 
   const createTask = async (task, e) => {
     e.preventDefault();
 
-    const data = await api
-      .post("tasks/create", task, {
+    let msgText = "Tarefa criada com sucesso!";
+
+    try {
+      const { data, status } = await api.post("tasks/create", task, {
         Authorization: `Bearer ${JSON.parse(token)}`,
         "Content-Type": "multipart/form-data",
-      })
-      .then((res) => {
-        return res.data;
-      })
-      .catch((error) => {
-        return error.res.data;
       });
 
-    setErrorTask(data.message);
+      if (status === 200) {
+        message.success(msgText, [2.5]);
+        return data;
+      } else {
+        throw new Error(data.message);
+      }
+    } catch (error) {
+      return message.error(error.message, [2.5]);
+    }
   };
 
   return (
@@ -47,17 +53,23 @@ const Home = () => {
           <h1>WELCOME Gustavo</h1>
         </HeaderText>
         <form onSubmit={handleSubmit(createTask)}>
-          <InputTask
-            type="text"
-            placeholder="Digite uma Tarefa"
-            name="task"
-            {...register("task")}
+          <CreateTasks>
+            <InputTask
+              type="text"
+              placeholder="Digite uma Tarefa"
+              name="task"
+              {...register("task")}
+            />
+            <ButtonTask type="submit" value="ADD" />
+          </CreateTasks>
+          <Select
+            label="DIFICULDADE DA TAREFA:"
+            name="taskpriority"
+            {...register("taskpriority")}
           />
-          <SelectTask label="GRAU DA TASK" name ="taskpriority" {...register("taskpriority")}/>
-          <ButtonTask type="submit" value="ADD" />
         </form>
       </ContentOne>
-      {errorTask && <ErrorTask>{errorTask}</ErrorTask>}
+
       <ContentTwo>
         <Tasks>
           <TaskWrapper>

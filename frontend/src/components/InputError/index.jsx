@@ -2,17 +2,17 @@ import { useEffect, useState } from "react";
 import { MsgError } from "./styles";
 
 const InputError = ({ msgError }) => {
-  // const [visibility, setVisibility] = useState(false);
+  const [visibility, setVisibility] = useState(false);
 
-  // useEffect(() => {
-  //   setVisibility(true);
+  useEffect(() => {
+    setVisibility(true);
 
-  //   setTimeout(() => {
-  //     setVisibility(false);
-  //   }, 4000);
-  // }, []);
+    setTimeout(() => {
+      setVisibility(false);
+    }, 4000);
+  }, []);
 
-  return <MsgError>{msgError}</MsgError>;
+  return visibility && <MsgError>{msgError}</MsgError>;
 };
 
 export default InputError;
