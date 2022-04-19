@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ButtonTask,
   ContentOne,
@@ -21,6 +21,7 @@ import { message } from "antd";
 
 const Home = () => {
   const [token] = useState(localStorage.getItem("token") || "");
+  const [myTasks, setMyTasks] = useState([]);
 
   const { register, handleSubmit } = useForm();
 
@@ -45,6 +46,19 @@ const Home = () => {
       return message.error(error.message, [2.5]);
     }
   };
+
+  useEffect(() => {
+    api
+      .get("/tasks/mytasks", {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(token)}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data.tasks)
+        setMyTasks(res.data.tasks);
+      });
+  }, [token]);
 
   return (
     <HomeWrapper>
@@ -72,13 +86,14 @@ const Home = () => {
 
       <ContentTwo>
         <Tasks>
-          <TaskWrapper>
-            <div>COR</div>
-            <div>
-              <h1>TASK</h1>
-            </div>
-            <div>Icons</div>
-          </TaskWrapper>
+          {myTasks.length > 0 &&
+            myTasks.map((mytask) => (
+              <TaskWrapper key={mytask.id}>
+                <p>GRAU</p>
+                <h1>{mytask.task}</h1>
+                <div>ICONS</div>
+              </TaskWrapper>
+            ))}
         </Tasks>
       </ContentTwo>
     </HomeWrapper>
