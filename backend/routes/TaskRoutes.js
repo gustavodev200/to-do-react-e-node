@@ -5,8 +5,8 @@ const TaskController = require('../controllers/TaskController')
 const verifyToken = require('../helpers/verify-token')
 
 router.post('/create', verifyToken, TaskController.createTasks)
-router.patch('/:id', verifyToken, TaskController.editTasks)
 router.get('/mytasks', verifyToken, TaskController.getAllUserTasks)
+router.patch('/:id', verifyToken, TaskController.editTasks)
 router.delete('/:id', verifyToken, TaskController.removeTasks)
 router.patch('/checked/:id', verifyToken, TaskController.checkedTasks)
 

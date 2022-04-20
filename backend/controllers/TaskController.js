@@ -130,6 +130,16 @@ module.exports = class TaskController {
     res.status(200).json({ message: "Tarefa atualizada com sucesso!" });
   }
 
+  static async getAllUserTasks(req, res) {
+    //get user from token
+    const token = getToken(req);
+    const user = await getUserByToken(token);
+
+    const tasks = await Task.find({})
+
+    res.status(200).json({ tasks });
+  }
+
   static async checkedTasks(req, res) {
     const id = req.params.id;
 
@@ -160,15 +170,5 @@ module.exports = class TaskController {
     updateDgetAllUserTasksask.findByIdAndUpdate(id, updateData);
 
     res.status(200).json({ message: "Tarefa atualizada com sucesso!" });
-  }
-
-  static async getAllUserTasks(req, res) {
-     //get user from token
-     const token = getToken(req);
-     const user = await getUserByToken(token);
-
-    const tasks = await Task.find({ "user._id": user._id }).sort("-createdAt");
-
-    res.status(200).json({ tasks });
   }
 };

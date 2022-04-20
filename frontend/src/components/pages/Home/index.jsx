@@ -23,6 +23,19 @@ const Home = () => {
   const [token] = useState(localStorage.getItem("token") || "");
   const [myTasks, setMyTasks] = useState([]);
 
+  useEffect(() => {
+    api
+      .get("/tasks/mytasks", {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(token)}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data.tasks);
+        setMyTasks(res.data.tasks);
+      });
+  }, [token]);
+
   const { register, handleSubmit } = useForm();
 
   const createTask = async (task, e) => {
@@ -46,19 +59,6 @@ const Home = () => {
       return message.error(error.message, [2.5]);
     }
   };
-
-  useEffect(() => {
-    api
-      .get("/tasks/mytasks", {
-        headers: {
-          Authorization: `Bearer ${JSON.parse(token)}`,
-        },
-      })
-      .then((res) => {
-        console.log(res.data.tasks)
-        setMyTasks(res.data.tasks);
-      });
-  }, [token]);
 
   return (
     <HomeWrapper>
