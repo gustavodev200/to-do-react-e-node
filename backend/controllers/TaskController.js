@@ -6,7 +6,7 @@ const getUserByToken = require("../helpers/get-user-by-token");
 
 module.exports = class TaskController {
   static async createTasks(req, res) {
-    const { task, taskpriority } = req.body;
+    const { task, taskpriority} = req.body;
 
     let checked = false;
 
@@ -49,7 +49,7 @@ module.exports = class TaskController {
   static async removeTasks(req, res) {
     const id = req.params.id;
 
-    // // check if id is valid
+    // // // check if id is valid
     if (!ObjectId.isValid(id)) {
       res.status(422).json({ message: "ID inválido!" });
       return;

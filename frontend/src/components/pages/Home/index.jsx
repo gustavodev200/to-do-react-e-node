@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { Context } from "../../../context/UserContext";
+
 import {
   ButtonTask,
   ContentOne,
@@ -28,12 +30,14 @@ import api from "../../../utils/api";
 
 import "antd/dist/antd.css";
 import { message } from "antd";
+import { useCallback } from "react";
+import { Link } from "react-router-dom";
 
 const Home = () => {
-  const [token] = useState(localStorage.getItem("token") || "");
   const [myTasks, setMyTasks] = useState([]);
+  const { logout, token } = useContext(Context);
 
-  useEffect(() => {
+  const getMyTasks = useCallback(() => {
     api
       .get("/tasks/mytasks", {
         headers: {
@@ -41,10 +45,32 @@ const Home = () => {
         },
       })
       .then((res) => {
-        console.log(res.data.tasks);
-        setMyTasks(res.data.tasks);
+        return setMyTasks(res.data.tasks);
       });
   }, [token]);
+
+  // const removeTask = async (id) => {
+  //   const data = await api
+  //     .delete(`/tasks/${id}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${JSON.parse(token)}`,
+  //       },
+  //     })
+  //     .then((res) => {
+  //       const updateTasks = task.filter((taskFilter) => taskFilter._id !== id);
+  //       console.log(updateTasks);
+  //       setMyTasks(updateTasks);
+  //       message.success("Tarefa deletada com sucesso", [2.5]);
+  //       return res.data;
+  //     })
+  //     .catch((err) => {
+  //       return message.error("Erro ao Deletar Tarefa", [2.5]);
+  //     });
+  // };
+
+  useEffect(() => {
+    getMyTasks();
+  }, [getMyTasks]);
 
   const { register, handleSubmit } = useForm();
 
@@ -61,7 +87,8 @@ const Home = () => {
 
       if (status === 200) {
         message.success(msgText, [2.5]);
-        return data;
+        getMyTasks();
+        return data
       } else {
         throw new Error(data.message);
       }
@@ -74,7 +101,12 @@ const Home = () => {
     <HomeWrapper>
       <ContentOne>
         <HeaderText>
-          <h1>WELCOME user</h1>
+          <div>
+            <h1>WELCOME user</h1>
+          </div>
+          <div>
+            <p onClick={logout}>Sair</p>
+          </div>
         </HeaderText>
         <form onSubmit={handleSubmit(createTask)}>
           <CreateTasks>
@@ -111,13 +143,17 @@ const Home = () => {
                 </DifficultyAndTask>
                 <IconsWrapper>
                   <IconsGap>
-                    <RiDeleteBin6Line fontSize="20"/>
+                    <button onClick={() => console.log(myTasks.user)}>
+                    {/* <Link to={`/${task}`}> */}
+                      <RiDeleteBin6Line fontSize="20" />
+                    {/* </Link> */}
+                    </button>
                   </IconsGap>
                   <IconsGap>
-                    <AiOutlineEdit fontSize="20"/>
+                    <AiOutlineEdit fontSize="20" />
                   </IconsGap>
                   <IconsGap>
-                    <FiCheck fontSize="20"/>
+                    <FiCheck fontSize="20" />
                   </IconsGap>
                 </IconsWrapper>
               </TaskWrapper>

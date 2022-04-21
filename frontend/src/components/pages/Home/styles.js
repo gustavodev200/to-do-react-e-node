@@ -19,27 +19,38 @@ export const ContentOne = styled.div`
 
   form {
     width: 100%;
-    align-items: center;
     display: flex;
+    align-items: center;
     justify-content: center;
     flex-direction: column;
   }
 `;
 export const ContentTwo = styled.div`
   width: 100%;
-  height: 95%;
+  height: 70%;
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   justify-content: center;
 `;
 
 export const HeaderText = styled.div`
   width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
   h1 {
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: #fff;
   }
+  p {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+  }
+
+
 `;
 export const InputTask = styled.input`
   width: 65%;
@@ -71,16 +82,19 @@ export const ButtonTask = styled.input`
 
 export const Tasks = styled.div`
   width: 95%;
-  height: 95%;
+  height: 90%;
+  padding: 1rem;
+  margin-top: 1rem;
   background-color: #fff;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-y: scroll;
 `;
 
 export const TaskWrapper = styled.div`
-  width: 90%;
+  width: 100%;
   height: 5rem;
   background-color: #d2d2d2;
   border-radius: 5px;
@@ -108,7 +122,7 @@ export const DifficultyAndTask = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`
+`;
 
 export const RedDifficulty = styled.div`
   background-color: #ff7979;
@@ -135,8 +149,8 @@ export const IconsWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`
+`;
 
 export const IconsGap = styled.div`
   margin-left: 1rem;
-`
+`;
