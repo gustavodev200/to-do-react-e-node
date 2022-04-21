@@ -135,7 +135,7 @@ module.exports = class TaskController {
     const token = getToken(req);
     const user = await getUserByToken(token);
 
-    const tasks = await Task.find({})
+    const tasks = await Task.find({"user._id": user._id.toString()}).sort('-taskpriority')
 
     res.status(200).json({ tasks });
   }

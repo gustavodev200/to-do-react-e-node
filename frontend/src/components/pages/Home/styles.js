@@ -75,11 +75,12 @@ export const Tasks = styled.div`
   background-color: #fff;
   border-radius: 10px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 `;
 
 export const TaskWrapper = styled.div`
-  width: 80%;
+  width: 90%;
   height: 5rem;
   background-color: #d2d2d2;
   border-radius: 5px;
@@ -87,7 +88,13 @@ export const TaskWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 2rem;
+  padding: 0 1rem;
+
+  h1 {
+    margin-left: 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
 `;
 
 export const CreateTasks = styled.div`
@@ -96,3 +103,40 @@ export const CreateTasks = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
+export const DifficultyAndTask = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+export const RedDifficulty = styled.div`
+  background-color: #ff7979;
+  border-radius: 100%;
+  width: 2.5rem;
+  height: 2.5rem;
+`;
+
+export const GreenDifficulty = styled.div`
+  background-color: #85cd63;
+  border-radius: 100%;
+  width: 2.5rem;
+  height: 2.5rem;
+`;
+
+export const YellowDifficulty = styled.div`
+  background-color: #fdff89;
+  border-radius: 100%;
+  width: 2.5rem;
+  height: 2.5rem;
+`;
+
+export const IconsWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+export const IconsGap = styled.div`
+  margin-left: 1rem;
+`

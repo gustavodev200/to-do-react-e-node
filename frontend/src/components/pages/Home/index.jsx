@@ -4,12 +4,22 @@ import {
   ContentOne,
   ContentTwo,
   CreateTasks,
+  DifficultyAndTask,
+  GreenDifficulty,
   HeaderText,
   HomeWrapper,
+  IconsGap,
+  IconsWrapper,
   InputTask,
+  RedDifficulty,
   Tasks,
   TaskWrapper,
+  YellowDifficulty,
 } from "./styles";
+
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { AiOutlineEdit } from "react-icons/ai";
+import { FiCheck } from "react-icons/fi";
 
 import Select from "../../form/SelectTask";
 
@@ -64,7 +74,7 @@ const Home = () => {
     <HomeWrapper>
       <ContentOne>
         <HeaderText>
-          <h1>WELCOME Gustavo</h1>
+          <h1>WELCOME user</h1>
         </HeaderText>
         <form onSubmit={handleSubmit(createTask)}>
           <CreateTasks>
@@ -88,10 +98,28 @@ const Home = () => {
         <Tasks>
           {myTasks.length > 0 &&
             myTasks.map((mytask) => (
-              <TaskWrapper key={mytask.id}>
-                <p>GRAU</p>
-                <h1>{mytask.task}</h1>
-                <div>ICONS</div>
+              <TaskWrapper key={mytask._id}>
+                <DifficultyAndTask>
+                  {mytask.taskpriority === 1 && (
+                    <GreenDifficulty></GreenDifficulty>
+                  )}
+                  {mytask.taskpriority === 2 && (
+                    <YellowDifficulty></YellowDifficulty>
+                  )}
+                  {mytask.taskpriority === 3 && <RedDifficulty></RedDifficulty>}
+                  <h1>{mytask.task}</h1>
+                </DifficultyAndTask>
+                <IconsWrapper>
+                  <IconsGap>
+                    <RiDeleteBin6Line fontSize="20"/>
+                  </IconsGap>
+                  <IconsGap>
+                    <AiOutlineEdit fontSize="20"/>
+                  </IconsGap>
+                  <IconsGap>
+                    <FiCheck fontSize="20"/>
+                  </IconsGap>
+                </IconsWrapper>
               </TaskWrapper>
             ))}
         </Tasks>
