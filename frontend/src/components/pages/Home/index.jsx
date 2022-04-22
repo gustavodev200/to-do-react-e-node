@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../../../context/UserContext";
 
 import {
+  BtnIconsTask,
   ButtonTask,
   ContentOne,
   ContentTwo,
@@ -49,24 +50,23 @@ const Home = () => {
       });
   }, [token]);
 
-  // const removeTask = async (id) => {
-  //   const data = await api
-  //     .delete(`/tasks/${id}`, {
-  //       headers: {
-  //         Authorization: `Bearer ${JSON.parse(token)}`,
-  //       },
-  //     })
-  //     .then((res) => {
-  //       const updateTasks = task.filter((taskFilter) => taskFilter._id !== id);
-  //       console.log(updateTasks);
-  //       setMyTasks(updateTasks);
-  //       message.success("Tarefa deletada com sucesso", [2.5]);
-  //       return res.data;
-  //     })
-  //     .catch((err) => {
-  //       return message.error("Erro ao Deletar Tarefa", [2.5]);
-  //     });
-  // };
+  const removeTask = async (id) => {
+    const data = await api
+      .delete(`/tasks/${id}`, {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(token)}`,
+        },
+      })
+      .then((response) => {
+        const updatedPets = myTasks.filter((task) => task._id !== id);
+        setMyTasks(updatedPets);
+        message.success("Tarefa deletada com sucesso", [2.5]);
+        return response.data;
+      })
+      .catch((error) => {
+        return message.error(error.response.data, [2.5]);
+      });
+  };
 
   useEffect(() => {
     getMyTasks();
@@ -88,7 +88,7 @@ const Home = () => {
       if (status === 200) {
         message.success(msgText, [2.5]);
         getMyTasks();
-        return data
+        return data;
       } else {
         throw new Error(data.message);
       }
@@ -143,14 +143,14 @@ const Home = () => {
                 </DifficultyAndTask>
                 <IconsWrapper>
                   <IconsGap>
-                    <button onClick={() => console.log(myTasks.user)}>
-                    {/* <Link to={`/${task}`}> */}
+                    <BtnIconsTask onClick={() => removeTask(mytask._id)}>
                       <RiDeleteBin6Line fontSize="20" />
-                    {/* </Link> */}
-                    </button>
+                    </BtnIconsTask>
                   </IconsGap>
                   <IconsGap>
-                    <AiOutlineEdit fontSize="20" />
+                    <Link to={`/${mytask._id}`}>
+                      <AiOutlineEdit fontSize="20" />
+                    </Link>
                   </IconsGap>
                   <IconsGap>
                     <FiCheck fontSize="20" />

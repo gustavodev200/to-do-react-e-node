@@ -7,7 +7,7 @@ import Register from "./components/pages/Auth/Register";
 
 import { UserProvider } from "./context/UserContext";
 import GlobalStyle from "./styles/globalStyles";
-import Popup from "./components/Popup";
+import EditTasks from "./components/EditTasks";
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path='/:id' element={<Popup />} />
+            <Route path="/:id" element={<EditTasks />} />
           </Routes>
           {/* </Container> */}
         </UserProvider>

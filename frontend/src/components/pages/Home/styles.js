@@ -49,8 +49,6 @@ export const HeaderText = styled.div`
     color: #fff;
     cursor: pointer;
   }
-
-
 `;
 export const InputTask = styled.input`
   width: 65%;
@@ -153,4 +151,18 @@ export const IconsWrapper = styled.div`
 
 export const IconsGap = styled.div`
   margin-left: 1rem;
+`;
+
+export const BtnIconsTask = styled.button`
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  padding: 0.5rem 0.5rem;
+  background-color: #6c63ff;
+  color: #fff;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: #7c80ff;
+  }
 `;
