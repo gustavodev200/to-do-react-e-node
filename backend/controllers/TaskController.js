@@ -6,7 +6,7 @@ const getUserByToken = require("../helpers/get-user-by-token");
 
 module.exports = class TaskController {
   static async createTasks(req, res) {
-    const { task, taskpriority} = req.body;
+    const { task, taskpriority } = req.body;
 
     let checked = false;
 
@@ -135,7 +135,9 @@ module.exports = class TaskController {
     const token = getToken(req);
     const user = await getUserByToken(token);
 
-    const tasks = await Task.find({"user._id": user._id.toString()}).sort('-taskpriority')
+    const tasks = await Task.find({ "user._id": user._id.toString() }).sort(
+      "-taskpriority"
+    );
 
     res.status(200).json({ tasks });
   }
@@ -170,5 +172,25 @@ module.exports = class TaskController {
     updateDgetAllUserTasksask.findByIdAndUpdate(id, updateData);
 
     res.status(200).json({ message: "Tarefa atualizada com sucesso!" });
+  }
+
+  static async getTaskById(req, res) {
+    const id = req.params.id;
+
+    //check if id is valid
+    if (!ObjectId.isValid(id)) {
+      res.status(422).json({ message: "ID inválido!" });
+      return;
+    }
+
+    //check if task exists
+    const tasks = await Task.findOne({ _id: id });
+
+    if (!tasks) {
+      res.status(404).json({ message: "Tarefa não encontrada!" });
+      return;
+    }
+
+    res.status(200).json({ tasks: tasks });
   }
 };
