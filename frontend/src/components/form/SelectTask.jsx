@@ -7,9 +7,9 @@ const Select = React.forwardRef(({ onChange, onBlur, name, label }, ref) => (
   <>
     <LabelWrapper>{label}</LabelWrapper>
     <SelectWrapper name={name} ref={ref} onChange={onChange} onBlur={onBlur}>
-      <option value="1">TAREFA FÁCIL </option>
-      <option value="2">TAREFA MÉDIA</option>
-      <option value="3">TAREFA DIFÍCIL</option>
+      <option value="1">FÁCIL </option>
+      <option value="2">MÉDIA</option>
+      <option value="3">DIFÍCIL</option>
     </SelectWrapper>
   </>
 ));

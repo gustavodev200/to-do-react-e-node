@@ -6,9 +6,9 @@ const getUserByToken = require("../helpers/get-user-by-token");
 
 module.exports = class TaskController {
   static async createTasks(req, res) {
-    const { task, taskpriority } = req.body;
-
     let checked = false;
+
+    const { task, taskpriority } = req.body;
 
     if (!task) {
       res
@@ -145,7 +145,7 @@ module.exports = class TaskController {
   static async checkedTasks(req, res) {
     const id = req.params.id;
 
-    const { checked } = req.body;
+    let checked = false;
 
     const updateData = {};
 
@@ -169,7 +169,11 @@ module.exports = class TaskController {
       return;
     }
 
-    updateDgetAllUserTasksask.findByIdAndUpdate(id, updateData);
+    if (checked === false) {
+      updateData.checked = true;
+    }
+
+    await Task.findByIdAndUpdate(id, updateData);
 
     res.status(200).json({ message: "Tarefa atualizada com sucesso!" });
   }

@@ -77,9 +77,9 @@ const EditTasks = () => {
             onChange={handlePriority}
             value={myTask.taskpriority || ""}
           >
-            <option value="1">TAREFA FÁCIL </option>
-            <option value="2">TAREFA MÉDIA</option>
-            <option value="3">TAREFA DIFÍCIL</option>
+            <option value="1">FÁCIL </option>
+            <option value="2">MÉDIA</option>
+            <option value="3">DIFÍCIL</option>
           </select>
           <input type="submit" value="EDITAR" />
         </form>

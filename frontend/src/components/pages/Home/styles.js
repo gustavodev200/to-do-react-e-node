@@ -125,7 +125,7 @@ export const DifficultyAndTask = styled.div`
 export const RedDifficulty = styled.div`
   background-color: #ff7979;
   border-radius: 100%;
-  padding: 1.5rem;
+  padding: 1.2rem;
 `;
 
 export const GreenDifficulty = styled(RedDifficulty)`
@@ -182,4 +182,8 @@ export const BtnCheckTask = styled(BtnIconsTask)`
   &:hover {
     background-color: #60CD70;
   }
+`
+export const TaskWrapperChecked = styled(TaskWrapper)`
+  opacity: .5;
+  /* background-color: rgba(0,0,0, 0.5);s */
 `

@@ -18,6 +18,7 @@ import {
   RedDifficulty,
   Tasks,
   TaskWrapper,
+  TaskWrapperChecked,
   YellowDifficulty,
 } from "./styles";
 
@@ -47,20 +48,40 @@ const Home = () => {
         },
       })
       .then((res) => {
-        return setMyTasks(res.data.tasks);
+        setMyTasks(res.data.tasks);
       });
   }, [token]);
 
+  const checkedTask = async (id) => {
+    await api
+      .patch(`/tasks/checked/${id}`, {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(token)}`,
+        },
+      })
+      .then((response) => {
+        setMyTasks(myTasks.map((task) => task._id === id ? {...task, checked: true} : task));
+        // myTasks.filter((task) => task._id !== id);
+        message.success("Tarefa finalizada com sucesso", [2.5]);
+
+        console.log(response.data);
+        return response.data;
+      })
+      .catch((error) => {
+        return message.error(error.response.data, [2.5]);
+      });
+  };
+
   const removeTask = async (id) => {
-    const data = await api
+    await api
       .delete(`/tasks/${id}`, {
         headers: {
           Authorization: `Bearer ${JSON.parse(token)}`,
         },
       })
       .then((response) => {
-        const updatedPets = myTasks.filter((task) => task._id !== id);
-        setMyTasks(updatedPets);
+        const updatedTasks = myTasks.filter((task) => task._id !== id);
+        setMyTasks(updatedTasks);
         message.success("Tarefa deletada com sucesso", [2.5]);
         return response.data;
       })
@@ -130,37 +151,68 @@ const Home = () => {
       <ContentTwo>
         <Tasks>
           {myTasks.length > 0 &&
-            myTasks.map((mytask) => (
-              <TaskWrapper key={mytask._id}>
-                <DifficultyAndTask>
-                  {mytask.taskpriority === 1 && (
-                    <GreenDifficulty></GreenDifficulty>
-                  )}
-                  {mytask.taskpriority === 2 && (
-                    <YellowDifficulty></YellowDifficulty>
-                  )}
-                  {mytask.taskpriority === 3 && <RedDifficulty></RedDifficulty>}
-                  <h1>{mytask.task}</h1>
-                </DifficultyAndTask>
-                <IconsWrapper>
-                  <IconsGap>
-                    <BtnIconsTask onClick={() => removeTask(mytask._id)}>
-                      <RiDeleteBin6Line fontSize="20" />
-                    </BtnIconsTask>
-                  </IconsGap>
-                  <IconsGap>
-                    <Link to={`/${mytask._id}`}>
-                      <AiOutlineEdit fontSize="29" />
-                    </Link>
-                  </IconsGap>
-                  <IconsGap>
-                    <BtnCheckTask>
-                      <FiCheck fontSize="20" />
-                    </BtnCheckTask>
-                  </IconsGap>
-                </IconsWrapper>
-              </TaskWrapper>
-            ))}
+            myTasks.map((mytask) =>
+              mytask.checked === false ? (
+                <TaskWrapper key={mytask._id}>
+                  <DifficultyAndTask>
+                    {mytask.taskpriority === 1 && (
+                      <GreenDifficulty></GreenDifficulty>
+                    )}
+                    {mytask.taskpriority === 2 && (
+                      <YellowDifficulty></YellowDifficulty>
+                    )}
+                    {mytask.taskpriority === 3 && (
+                      <RedDifficulty></RedDifficulty>
+                    )}
+                    <h1>{mytask.task}</h1>
+                  </DifficultyAndTask>
+                  <IconsWrapper>
+                    <IconsGap>
+                      <BtnIconsTask onClick={() => removeTask(mytask._id)}>
+                        <RiDeleteBin6Line fontSize="20" />
+                      </BtnIconsTask>
+                    </IconsGap>
+                    <IconsGap>
+                      <Link to={`/${mytask._id}`}>
+                        <AiOutlineEdit fontSize="29" />
+                      </Link>
+                    </IconsGap>
+                    <IconsGap>
+                      <BtnCheckTask onClick={() => checkedTask(mytask._id)}>
+                        <FiCheck fontSize="20" />
+                      </BtnCheckTask>
+                    </IconsGap>
+                  </IconsWrapper>
+                </TaskWrapper>
+              ) : (
+                <TaskWrapperChecked key={mytask._id}>
+                  <DifficultyAndTask>
+                    {mytask.taskpriority === 1 && (
+                      <GreenDifficulty></GreenDifficulty>
+                    )}
+                    {mytask.taskpriority === 2 && (
+                      <YellowDifficulty></YellowDifficulty>
+                    )}
+                    {mytask.taskpriority === 3 && (
+                      <RedDifficulty></RedDifficulty>
+                    )}
+                    <h1>{mytask.task}</h1>
+                  </DifficultyAndTask>
+                  <IconsWrapper>
+                    <IconsGap>
+                      <BtnIconsTask onClick={() => removeTask(mytask._id)}>
+                        <RiDeleteBin6Line fontSize="20" />
+                      </BtnIconsTask>
+                    </IconsGap>
+                    {/* <IconsGap>
+                      <BtnCheckTask onClick={() => checkedTask(mytask._id)}>
+                        <FiCheck fontSize="20" />
+                      </BtnCheckTask>
+                    </IconsGap> */}
+                  </IconsWrapper>
+                </TaskWrapperChecked>
+              )
+            )}
         </Tasks>
       </ContentTwo>
     </HomeWrapper>
