@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../../../context/UserContext";
 
 import {
+  BtnCheckTask,
   BtnIconsTask,
   ButtonTask,
   ContentOne,
@@ -102,7 +103,7 @@ const Home = () => {
       <ContentOne>
         <HeaderText>
           <div>
-            <h1>WELCOME user</h1>
+            <h1>WELCOME name</h1>
           </div>
           <div>
             <p onClick={logout}>Sair</p>
@@ -149,11 +150,13 @@ const Home = () => {
                   </IconsGap>
                   <IconsGap>
                     <Link to={`/${mytask._id}`}>
-                      <AiOutlineEdit fontSize="20" />
+                      <AiOutlineEdit fontSize="29" />
                     </Link>
                   </IconsGap>
                   <IconsGap>
-                    <FiCheck fontSize="20" />
+                    <BtnCheckTask>
+                      <FiCheck fontSize="20" />
+                    </BtnCheckTask>
                   </IconsGap>
                 </IconsWrapper>
               </TaskWrapper>

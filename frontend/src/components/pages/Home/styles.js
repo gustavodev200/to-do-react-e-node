@@ -125,22 +125,15 @@ export const DifficultyAndTask = styled.div`
 export const RedDifficulty = styled.div`
   background-color: #ff7979;
   border-radius: 100%;
-  width: 2.5rem;
-  height: 2.5rem;
+  padding: 1.5rem;
 `;
 
-export const GreenDifficulty = styled.div`
+export const GreenDifficulty = styled(RedDifficulty)`
   background-color: #85cd63;
-  border-radius: 100%;
-  width: 2.5rem;
-  height: 2.5rem;
 `;
 
-export const YellowDifficulty = styled.div`
+export const YellowDifficulty = styled(RedDifficulty)`
   background-color: #fdff89;
-  border-radius: 100%;
-  width: 2.5rem;
-  height: 2.5rem;
 `;
 
 export const IconsWrapper = styled.div`
@@ -151,13 +144,28 @@ export const IconsWrapper = styled.div`
 
 export const IconsGap = styled.div`
   margin-left: 1rem;
+
+  a {
+    display: flex;
+    cursor: pointer;
+    svg {
+      padding: 0.5rem 0.5rem;
+      background-color: #6c63ff;
+      color: #fff;
+      border-radius: 5px;
+
+      &:hover {
+        background-color: #7c80ff;
+      }
+    }
+  }
 `;
 
 export const BtnIconsTask = styled.button`
   border: none;
   background-color: transparent;
   cursor: pointer;
-  padding: 0.5rem 0.5rem;
+  padding: 0.3rem 0.5rem;
   background-color: #6c63ff;
   color: #fff;
   border-radius: 5px;
@@ -166,3 +174,12 @@ export const BtnIconsTask = styled.button`
     background-color: #7c80ff;
   }
 `;
+
+export const BtnCheckTask = styled(BtnIconsTask)`
+  padding: .7rem 1rem;
+  background-color: #85CD63;
+
+  &:hover {
+    background-color: #60CD70;
+  }
+`
