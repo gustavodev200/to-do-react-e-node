@@ -38,7 +38,7 @@ import { Link } from "react-router-dom";
 
 const Home = () => {
   const [myTasks, setMyTasks] = useState([]);
-  const { logout, token } = useContext(Context);
+  const { logout, token} = useContext(Context);
 
   const getMyTasks = useCallback(() => {
     api
