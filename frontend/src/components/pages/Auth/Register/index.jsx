@@ -19,7 +19,7 @@ import { Link } from "react-router-dom";
 import InputError from "../../../InputError";
 
 const Register = () => {
-  const { registerUser, msgError } = useContext(Context);
+  const { registerUser, msgError} = useContext(Context);
   const schema = yup
     .object({
       name: yup.string().required("O nome é obrigatório"),

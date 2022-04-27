@@ -43,7 +43,7 @@ const Login = () => {
 
   const onSubmit = (user, e) => {
     e.preventDefault();
-    login(user);
+      login(user);
   };
   return (
     <RegisterWrapper>
@@ -72,7 +72,7 @@ const Login = () => {
             required
           />
           <MessageValidation>{errors.password?.message}</MessageValidation>
-          {msgError && <InputError msgError={msgError}/>}
+          {msgError && <InputError msgError={msgError} />}
           <ButtonSubmit type="submit" value="ENTRAR" />
           <Link to="/register">Não tenho conta</Link>
         </form>

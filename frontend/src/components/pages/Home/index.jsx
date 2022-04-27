@@ -35,10 +35,12 @@ import "antd/dist/antd.css";
 import { message } from "antd";
 import { useCallback } from "react";
 import { Link } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 
 const Home = () => {
   const [myTasks, setMyTasks] = useState([]);
-  const { logout, token} = useContext(Context);
+  const { logout, token } = useContext(Context);
+  const userDecodificado = jwt_decode(token);
 
   const getMyTasks = useCallback(() => {
     api
@@ -48,6 +50,7 @@ const Home = () => {
         },
       })
       .then((res) => {
+        console.log(res.data.arrayChecked)
         setMyTasks(res.data.tasks);
       });
   }, [token]);
@@ -60,7 +63,11 @@ const Home = () => {
         },
       })
       .then((response) => {
-        setMyTasks(myTasks.map((task) => task._id === id ? {...task, checked: true} : task));
+        setMyTasks(
+          myTasks.map((task) =>
+            task._id === id ? { ...task, checked: true } : task
+          )
+        );
         // myTasks.filter((task) => task._id !== id);
         message.success("Tarefa finalizada com sucesso", [2.5]);
 
@@ -124,7 +131,9 @@ const Home = () => {
       <ContentOne>
         <HeaderText>
           <div>
-            <h1>WELCOME name</h1>
+            <h1>
+              WELCOME <span>{userDecodificado.name}</span>
+            </h1>
           </div>
           <div>
             <p onClick={logout}>Sair</p>

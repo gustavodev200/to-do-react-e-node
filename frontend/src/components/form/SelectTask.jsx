@@ -1,8 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-import circle_red from "../../assets/img/circle_red.svg";
-
 const Select = React.forwardRef(({ onChange, onBlur, name, label }, ref) => (
   <>
     <LabelWrapper>{label}</LabelWrapper>

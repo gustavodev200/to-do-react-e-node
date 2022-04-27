@@ -40,8 +40,12 @@ export const HeaderText = styled.div`
   justify-content: space-between;
 
   h1 {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     color: #fff;
+
+    span {
+      font-weight: bold;
+    }
   }
   p {
     font-size: 1.5rem;
@@ -89,11 +93,15 @@ export const Tasks = styled.div`
   flex-direction: column;
   align-items: center;
   overflow-y: scroll;
+
+  @media screen and (min-width: 700px) {
+      width: 80%;
+    }
 `;
 
 export const TaskWrapper = styled.div`
   width: 100%;
-  height: 5rem;
+  min-height: 5rem;
   background-color: #d2d2d2;
   border-radius: 5px;
   margin-top: 1rem;

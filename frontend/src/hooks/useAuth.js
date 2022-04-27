@@ -3,6 +3,9 @@ import api from "../utils/api";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+import "antd/dist/antd.css";
+import { message } from "antd";
+
 export default function useAuth() {
   const [token, setToken] = useState(localStorage.getItem("token") || "");
   const [authenticated, setAuthenticated] = useState(false);
@@ -34,10 +37,12 @@ export default function useAuth() {
         throw new Error(data.message);
       }
 
-      setMsgSuccess(msgText);
+      // setMsgSuccess(msgText);
     } catch (error) {
       return setMsgError(error.message);
     }
+
+    setMsgSuccess(message.success(msgText, [2.5]));
   }
 
   async function login(user) {
@@ -51,10 +56,11 @@ export default function useAuth() {
       } else {
         throw new Error(data.message);
       }
-      setMsgSuccess(msgText);
+      // setMsgSuccess(msgText);
     } catch (error) {
       return setMsgError(error.message);
     }
+    setMsgSuccess(message.success(msgText, [2.5]));
   }
 
   async function authUser(data) {

@@ -139,7 +139,19 @@ module.exports = class TaskController {
       "-taskpriority"
     );
 
-    res.status(200).json({ tasks });
+    let arrayChecked = [];
+
+    tasks.filter((task) => {
+      if (task.checked === true) {
+        arrayChecked.push(task.checked);
+      } else {
+        arrayChecked.unshift(task.checked);
+      }
+
+      return arrayChecked;
+    });
+
+    res.status(200).json({ tasks, arrayChecked });
   }
 
   static async checkedTasks(req, res) {
