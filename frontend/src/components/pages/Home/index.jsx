@@ -50,7 +50,7 @@ const Home = () => {
         },
       })
       .then((res) => {
-        console.log(res.data.arrayChecked)
+        console.log(res.data.tasks)
         setMyTasks(res.data.tasks);
       });
   }, [token]);
