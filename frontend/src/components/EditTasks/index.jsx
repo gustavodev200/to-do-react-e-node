@@ -2,6 +2,7 @@ import { message } from "antd";
 import { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import api from "../../utils/api";
+import Loading from "../Loading";
 import { PopupContent, PopupWrapper, TitleHeader } from "./styles";
 
 const EditTasks = () => {
@@ -9,6 +10,8 @@ const EditTasks = () => {
   const [token] = useState(localStorage.getItem("token") || "");
   const navigate = useNavigate();
   const { id } = useParams();
+  const [removeLoading, setRemoveLoading] = useState(false)
+
 
   function handleChange(e) {
     return setMyTask({ ...myTask, [e.target.name]: e.target.value });
@@ -27,7 +30,8 @@ const EditTasks = () => {
         Authorization: `Bearer ${JSON.parse(token)}`,
       })
       .then((res) => {
-        return setMyTask(res.data.tasks);
+        setMyTask(res.data.tasks);
+        setRemoveLoading(true)
       });
   }, [token, id]);
 
@@ -83,6 +87,7 @@ const EditTasks = () => {
           </select>
           <input type="submit" value="EDITAR" />
         </form>
+        {!removeLoading && <Loading />}
       </PopupContent>
     </PopupWrapper>
   );

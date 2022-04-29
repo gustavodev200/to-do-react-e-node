@@ -65,16 +65,26 @@ export const PopupContent = styled.div`
     select {
       width: 100%;
       border: none;
-      height: 3rem;
+      height: 3.5rem;
       background-color: #fff;
       font-size: 1rem;
       font-weight: bold;
       outline: none;
+      border-radius: 5px;
 
       option {
         font-weight: bold;
         font-size: 1rem;
       }
+    }
+  }
+
+  @media screen and (min-width: 700px) {
+    width: 50%;
+    height: 50%;
+
+    input[type="submit"] {
+      margin-top: 8%;
     }
   }
 `;

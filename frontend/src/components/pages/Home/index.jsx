@@ -36,11 +36,14 @@ import { message } from "antd";
 import { useCallback } from "react";
 import { Link } from "react-router-dom";
 import jwt_decode from "jwt-decode";
+import Loading from "../../Loading";
 
 const Home = () => {
   const [myTasks, setMyTasks] = useState([]);
   const { logout, token } = useContext(Context);
   const userDecodificado = jwt_decode(token);
+  const [removeLoading, setRemoveLoading] = useState(false)
+
 
   const getMyTasks = useCallback(() => {
     api
@@ -50,8 +53,8 @@ const Home = () => {
         },
       })
       .then((res) => {
-        console.log(res.data.tasks)
         setMyTasks(res.data.tasks);
+        setRemoveLoading(true)
       });
   }, [token]);
 
@@ -68,10 +71,9 @@ const Home = () => {
             task._id === id ? { ...task, checked: true } : task
           )
         );
-        // myTasks.filter((task) => task._id !== id);
         message.success("Tarefa finalizada com sucesso", [2.5]);
-
-        console.log(response.data);
+        getMyTasks();
+        setRemoveLoading(true)
         return response.data;
       })
       .catch((error) => {
@@ -89,6 +91,7 @@ const Home = () => {
       .then((response) => {
         const updatedTasks = myTasks.filter((task) => task._id !== id);
         setMyTasks(updatedTasks);
+        setRemoveLoading(true)
         message.success("Tarefa deletada com sucesso", [2.5]);
         return response.data;
       })
@@ -116,6 +119,7 @@ const Home = () => {
 
       if (status === 200) {
         message.success(msgText, [2.5]);
+        setRemoveLoading(true)
         getMyTasks();
         return data;
       } else {
@@ -222,6 +226,7 @@ const Home = () => {
                 </TaskWrapperChecked>
               )
             )}
+          {!removeLoading && <Loading />}
         </Tasks>
       </ContentTwo>
     </HomeWrapper>

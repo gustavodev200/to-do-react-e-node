@@ -135,23 +135,9 @@ module.exports = class TaskController {
     const token = getToken(req);
     const user = await getUserByToken(token);
 
-    const tasks = await Task.find({ "user._id": user._id.toString() }).sort(
-      "-taskpriority"
-    );
+    let tasks = await Task.find({ "user._id": user._id.toString() }).sort("checked -taskpriority");
 
-    let arrayChecked = [];
-
-    tasks.filter((task) => {
-      if (task.checked === true) {
-        arrayChecked.push(task.checked);
-      } else {
-        arrayChecked.unshift(task.checked);
-      }
-
-      return arrayChecked;
-    });
-
-    res.status(200).json({ tasks, arrayChecked });
+    res.status(200).json({ tasks});
   }
 
   static async checkedTasks(req, res) {

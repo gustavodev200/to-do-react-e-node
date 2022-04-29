@@ -53,6 +53,12 @@ export const HeaderText = styled.div`
     color: #fff;
     cursor: pointer;
   }
+
+  @media screen and (min-width: 700px) {
+    h1 {
+      font-size: 2rem;
+    }
+  }
 `;
 export const InputTask = styled.input`
   width: 65%;
@@ -95,8 +101,8 @@ export const Tasks = styled.div`
   overflow-y: scroll;
 
   @media screen and (min-width: 700px) {
-      width: 80%;
-    }
+    width: 80%;
+  }
 `;
 
 export const TaskWrapper = styled.div`
@@ -114,6 +120,12 @@ export const TaskWrapper = styled.div`
     margin-left: 1rem;
     font-size: 1.2rem;
     font-weight: bold;
+  }
+
+  @media screen and (min-width: 700px) {
+    h1 {
+    font-size: 2rem;
+  }
   }
 `;
 
@@ -134,6 +146,10 @@ export const RedDifficulty = styled.div`
   background-color: #ff7979;
   border-radius: 100%;
   padding: 1.2rem;
+
+  @media screen and (min-width: 700px) {
+    padding: 1.6rem;
+  }
 `;
 
 export const GreenDifficulty = styled(RedDifficulty)`
@@ -167,6 +183,11 @@ export const IconsGap = styled.div`
       }
     }
   }
+
+  @media screen and (min-width: 700px) {
+    margin-left: 3rem;
+  }
+
 `;
 
 export const BtnIconsTask = styled.button`
@@ -184,14 +205,14 @@ export const BtnIconsTask = styled.button`
 `;
 
 export const BtnCheckTask = styled(BtnIconsTask)`
-  padding: .7rem 1rem;
-  background-color: #85CD63;
+  padding: 0.7rem 1rem;
+  background-color: #85cd63;
 
   &:hover {
-    background-color: #60CD70;
+    background-color: #60cd70;
   }
-`
+`;
 export const TaskWrapperChecked = styled(TaskWrapper)`
-  opacity: .5;
+  opacity: 0.5;
   /* background-color: rgba(0,0,0, 0.5);s */
-`
+`;
