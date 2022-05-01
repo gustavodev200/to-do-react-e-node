@@ -16,8 +16,6 @@ function App() {
       <GlobalStyle />
       <Router>
         <UserProvider>
-          {/* <Navbar /> */}
-          {/* <Container> */}
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
@@ -26,7 +24,6 @@ function App() {
               <Route path="/:id" element={<EditTasks />} />
             </Route>
           </Routes>
-          {/* </Container> */}
         </UserProvider>
       </Router>
     </>

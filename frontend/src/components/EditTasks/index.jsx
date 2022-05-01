@@ -36,7 +36,6 @@ const EditTasks = () => {
   }, [token, id]);
 
   async function updateTask(myTask) {
-    console.log(myTask);
     await api
       .patch(`tasks/${myTask._id}`, myTask, {
         headers: {
@@ -45,7 +44,6 @@ const EditTasks = () => {
       })
       .then((response) => {
         message.success("Tarefa atualizada com sucesso", [2.5]);
-        console.log(response.data);
         navigate("/");
         return response.data;
       })

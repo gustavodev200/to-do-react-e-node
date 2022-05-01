@@ -3,7 +3,7 @@ import api from "../utils/api";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import "antd/dist/antd.css";
+import 'antd/dist/antd.min.css'
 import { message } from "antd";
 
 export default function useAuth() {
@@ -18,8 +18,9 @@ export default function useAuth() {
     const token = localStorage.getItem("token");
 
     if (token) {
-      api.defaults.headers.Authorization = `Bearer ${JSON.parse(token)}`;
       setAuthenticated(true);
+      api.defaults.headers.Authorization = `Bearer ${JSON.parse(token)}`;
+      navigate("/")
     }
 
     setLoading(false);

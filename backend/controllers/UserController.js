@@ -121,7 +121,7 @@ module.exports = class UserController {
   }
 
   static async getUserById(req, res) {
-    const id = req.params.id;
+    const id = req.userId;
 
     const user = await User.findById(id).select("-password");
 

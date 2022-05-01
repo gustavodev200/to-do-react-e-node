@@ -31,7 +31,7 @@ import Select from "../../form/SelectTask";
 import { useForm } from "react-hook-form";
 import api from "../../../utils/api";
 
-import "antd/dist/antd.css";
+import "antd/dist/antd.min.css";
 import { message } from "antd";
 import { useCallback } from "react";
 import { Link } from "react-router-dom";
@@ -40,10 +40,9 @@ import Loading from "../../Loading";
 
 const Home = () => {
   const [myTasks, setMyTasks] = useState([]);
-  const { logout, token } = useContext(Context);
+  const { logout, token, authenticated } = useContext(Context);
   const userDecodificado = jwt_decode(token);
-  const [removeLoading, setRemoveLoading] = useState(false)
-
+  const [removeLoading, setRemoveLoading] = useState(false);
 
   const getMyTasks = useCallback(() => {
     api
@@ -54,7 +53,7 @@ const Home = () => {
       })
       .then((res) => {
         setMyTasks(res.data.tasks);
-        setRemoveLoading(true)
+        setRemoveLoading(true);
       });
   }, [token]);
 
@@ -73,7 +72,7 @@ const Home = () => {
         );
         message.success("Tarefa finalizada com sucesso", [2.5]);
         getMyTasks();
-        setRemoveLoading(true)
+        setRemoveLoading(true);
         return response.data;
       })
       .catch((error) => {
@@ -91,7 +90,7 @@ const Home = () => {
       .then((response) => {
         const updatedTasks = myTasks.filter((task) => task._id !== id);
         setMyTasks(updatedTasks);
-        setRemoveLoading(true)
+        setRemoveLoading(true);
         message.success("Tarefa deletada com sucesso", [2.5]);
         return response.data;
       })
@@ -119,7 +118,7 @@ const Home = () => {
 
       if (status === 200) {
         message.success(msgText, [2.5]);
-        setRemoveLoading(true)
+        setRemoveLoading(true);
         getMyTasks();
         return data;
       } else {
@@ -131,105 +130,102 @@ const Home = () => {
   };
 
   return (
-    <HomeWrapper>
-      <ContentOne>
-        <HeaderText>
-          <div>
-            <h1>
-              WELCOME <span>{userDecodificado.name}</span>
-            </h1>
-          </div>
-          <div>
-            <p onClick={logout}>Sair</p>
-          </div>
-        </HeaderText>
-        <form onSubmit={handleSubmit(createTask)}>
-          <CreateTasks>
-            <InputTask
-              type="text"
-              placeholder="Digite uma Tarefa"
-              name="task"
-              {...register("task")}
+    authenticated  && (
+      <HomeWrapper>
+        <ContentOne>
+          <HeaderText>
+            <div>
+              <h1>
+                WELCOME <span>{userDecodificado.name}</span>
+              </h1>
+            </div>
+            <div>
+              <p onClick={logout}>Sair</p>
+            </div>
+          </HeaderText>
+          <form onSubmit={handleSubmit(createTask)}>
+            <CreateTasks>
+              <InputTask
+                type="text"
+                placeholder="Digite uma Tarefa"
+                name="task"
+                {...register("task")}
+              />
+              <ButtonTask type="submit" value="ADD" />
+            </CreateTasks>
+            <Select
+              label="DIFICULDADE DA TAREFA:"
+              name="taskpriority"
+              {...register("taskpriority")}
             />
-            <ButtonTask type="submit" value="ADD" />
-          </CreateTasks>
-          <Select
-            label="DIFICULDADE DA TAREFA:"
-            name="taskpriority"
-            {...register("taskpriority")}
-          />
-        </form>
-      </ContentOne>
+          </form>
+        </ContentOne>
 
-      <ContentTwo>
-        <Tasks>
-          {myTasks.length > 0 &&
-            myTasks.map((mytask) =>
-              mytask.checked === false ? (
-                <TaskWrapper key={mytask._id}>
-                  <DifficultyAndTask>
-                    {mytask.taskpriority === 1 && (
-                      <GreenDifficulty></GreenDifficulty>
-                    )}
-                    {mytask.taskpriority === 2 && (
-                      <YellowDifficulty></YellowDifficulty>
-                    )}
-                    {mytask.taskpriority === 3 && (
-                      <RedDifficulty></RedDifficulty>
-                    )}
-                    <h1>{mytask.task}</h1>
-                  </DifficultyAndTask>
-                  <IconsWrapper>
-                    <IconsGap>
-                      <BtnIconsTask onClick={() => removeTask(mytask._id)}>
-                        <RiDeleteBin6Line fontSize="20" />
-                      </BtnIconsTask>
-                    </IconsGap>
-                    <IconsGap>
-                      <Link to={`/${mytask._id}`}>
-                        <AiOutlineEdit fontSize="29" />
-                      </Link>
-                    </IconsGap>
-                    <IconsGap>
-                      <BtnCheckTask onClick={() => checkedTask(mytask._id)}>
-                        <FiCheck fontSize="20" />
-                      </BtnCheckTask>
-                    </IconsGap>
-                  </IconsWrapper>
-                </TaskWrapper>
-              ) : (
-                <TaskWrapperChecked key={mytask._id}>
-                  <DifficultyAndTask>
-                    {mytask.taskpriority === 1 && (
-                      <GreenDifficulty></GreenDifficulty>
-                    )}
-                    {mytask.taskpriority === 2 && (
-                      <YellowDifficulty></YellowDifficulty>
-                    )}
-                    {mytask.taskpriority === 3 && (
-                      <RedDifficulty></RedDifficulty>
-                    )}
-                    <h1>{mytask.task}</h1>
-                  </DifficultyAndTask>
-                  <IconsWrapper>
-                    <IconsGap>
-                      <BtnIconsTask onClick={() => removeTask(mytask._id)}>
-                        <RiDeleteBin6Line fontSize="20" />
-                      </BtnIconsTask>
-                    </IconsGap>
-                    {/* <IconsGap>
-                      <BtnCheckTask onClick={() => checkedTask(mytask._id)}>
-                        <FiCheck fontSize="20" />
-                      </BtnCheckTask>
-                    </IconsGap> */}
-                  </IconsWrapper>
-                </TaskWrapperChecked>
-              )
-            )}
-          {!removeLoading && <Loading />}
-        </Tasks>
-      </ContentTwo>
-    </HomeWrapper>
+        <ContentTwo>
+          <Tasks>
+            {myTasks.length > 0 &&
+              myTasks.map((mytask) =>
+                mytask.checked === false ? (
+                  <TaskWrapper key={mytask._id}>
+                    <DifficultyAndTask>
+                      {mytask.taskpriority === 1 && (
+                        <GreenDifficulty></GreenDifficulty>
+                      )}
+                      {mytask.taskpriority === 2 && (
+                        <YellowDifficulty></YellowDifficulty>
+                      )}
+                      {mytask.taskpriority === 3 && (
+                        <RedDifficulty></RedDifficulty>
+                      )}
+                      <h1>{mytask.task}</h1>
+                    </DifficultyAndTask>
+                    <IconsWrapper>
+                      <IconsGap>
+                        <BtnIconsTask onClick={() => removeTask(mytask._id)}>
+                          <RiDeleteBin6Line fontSize="20" />
+                        </BtnIconsTask>
+                      </IconsGap>
+                      <IconsGap>
+                        <Link to={`/${mytask._id}`}>
+                          <AiOutlineEdit fontSize="29" />
+                        </Link>
+                      </IconsGap>
+                      <IconsGap>
+                        <BtnCheckTask onClick={() => checkedTask(mytask._id)}>
+                          <FiCheck fontSize="20" />
+                        </BtnCheckTask>
+                      </IconsGap>
+                    </IconsWrapper>
+                  </TaskWrapper>
+                ) : (
+                  <TaskWrapperChecked key={mytask._id}>
+                    <DifficultyAndTask>
+                      {mytask.taskpriority === 1 && (
+                        <GreenDifficulty></GreenDifficulty>
+                      )}
+                      {mytask.taskpriority === 2 && (
+                        <YellowDifficulty></YellowDifficulty>
+                      )}
+                      {mytask.taskpriority === 3 && (
+                        <RedDifficulty></RedDifficulty>
+                      )}
+                      <h1>{mytask.task}</h1>
+                    </DifficultyAndTask>
+                    <IconsWrapper>
+                      <IconsGap>
+                        <BtnIconsTask onClick={() => removeTask(mytask._id)}>
+                          <RiDeleteBin6Line fontSize="20" />
+                        </BtnIconsTask>
+                      </IconsGap>
+                    </IconsWrapper>
+                  </TaskWrapperChecked>
+                )
+              )}
+            {!removeLoading && <Loading />}
+          </Tasks>
+        </ContentTwo>
+      </HomeWrapper>
+    )
   );
 };
 
