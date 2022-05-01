@@ -11,7 +11,7 @@ const app = express();
 app.use(express.json());
 
 //solve cors
-app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+app.use(cors({ credentials: true, origin: "https://api-todo-app-dede.herokuapp.com" }));
 
 //pulbic folder for images
 app.use(express.static("public"));
