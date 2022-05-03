@@ -21,4 +21,4 @@ app.use(express.static("public"));
 app.use("/users", UserRoutes);
 app.use("/tasks", TaskRoutes);
 
-app.listen(5000);
+app.listen(process.env.PORT || 5000);
